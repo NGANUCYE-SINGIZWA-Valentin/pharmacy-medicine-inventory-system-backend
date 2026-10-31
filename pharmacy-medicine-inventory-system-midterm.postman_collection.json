@@ -1,0 +1,329 @@
+{
+  "info": {
+    "name": "pharmacy-medicine-inventory-system-midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "A2 - Save MedicineCategory",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Antibiotics\"\n}" },
+        "url": { "raw": "http://localhost:8084/api/medicine-categories/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "medicine-categories", "save"] }
+      }
+    },
+    {
+      "name": "A2 - Get All MedicineCategories",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/medicine-categories/all", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "medicine-categories", "all"] }
+      }
+    },
+    {
+      "name": "A2 - Get MedicineCategory by ID",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/medicine-categories/00000000-0000-0000-0000-000000000000", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "medicine-categories", "00000000-0000-0000-0000-000000000000"] }
+      }
+    },
+    {
+      "name": "A2 - Save Counter",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"counterNumber\": 1,\n  \"name\": \"Counter One\"\n}" },
+        "url": { "raw": "http://localhost:8084/api/counters/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "counters", "save"] }
+      }
+    },
+    {
+      "name": "A2 - Get All Counters",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/counters/all", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "counters", "all"] }
+      }
+    },
+    {
+      "name": "A2 - Save Pharmacist",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Valentin\",\n  \"lastName\": \"Nganucye\",\n  \"licenseNumber\": \"PHARM-001\",\n  \"counter\": { \"id\": \"451ea2bb-94af-47a0-9e14-f206ca4ca8c5\" },\n  \"medicineCategories\": [\n    { \"id\": \"44a2670c-dc66-4e41-8f98-63560d013763\" },\n    { \"id\": \"5661bea0-6566-45cb-9d0c-86183de0bb17\" }\n  ]\n}" },
+        "url": { "raw": "http://localhost:8084/api/pharmacists/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "save"] }
+      }
+    },
+    {
+      "name": "A2 - Get All Pharmacists",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/pharmacists/all", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "all"] }
+      }
+    },
+    {
+      "name": "A2 - Save Supplier",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"companyName\": \"Kigali Pharma Distributors\",\n  \"contactName\": \"Eric Niyonzima\",\n  \"supplierCode\": \"SUP-001\",\n  \"city\": \"Kigali\",\n  \"phone\": \"+250788111001\"\n}" },
+        "url": { "raw": "http://localhost:8084/api/suppliers/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "save"] }
+      }
+    },
+    {
+      "name": "A2 - Get All Suppliers",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/suppliers/all", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "all"] }
+      }
+    },
+    {
+      "name": "A2 - Save StockOrder",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"orderDate\": \"2026-12-01\",\n  \"invoiceNumber\": \"INV-2026-011\",\n  \"supplier\": { \"id\": \"1d263c3f-3e35-4278-9e65-aacc4c513409\" },\n  \"pharmacist\": { \"id\": \"8917d215-7cbd-4e84-97a9-6f11105db446\" }\n}" },
+        "url": { "raw": "http://localhost:8084/api/stock-orders/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "save"] }
+      }
+    },
+    {
+      "name": "A2 - Get All StockOrders",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/all", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "all"] }
+      }
+    },
+    {
+      "name": "A2 - Get StockOrder by ID - 404",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/00000000-0000-0000-0000-000000000000", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "00000000-0000-0000-0000-000000000000"] }
+      }
+    },
+    {
+      "name": "A2 - Delete Supplier - 404",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "http://localhost:8084/api/suppliers/delete/00000000-0000-0000-0000-000000000000", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "delete", "00000000-0000-0000-0000-000000000000"] }
+      }
+    },
+    {
+      "name": "B1 - Suppliers by City",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/suppliers/by-city?city=kigali", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "by-city"], "query": [{ "key": "city", "value": "kigali" }] }
+      }
+    },
+    {
+      "name": "B1 - Suppliers by City - Empty",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/suppliers/by-city?city=nairobi", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "by-city"], "query": [{ "key": "city", "value": "nairobi" }] }
+      }
+    },
+    {
+      "name": "B2 - StockOrders by Status PLACED",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/by-status?status=PLACED", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "by-status"], "query": [{ "key": "status", "value": "PLACED" }] }
+      }
+    },
+    {
+      "name": "B2 - StockOrders by Status RECEIVED",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/by-status?status=RECEIVED", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "by-status"], "query": [{ "key": "status", "value": "RECEIVED" }] }
+      }
+    },
+    {
+      "name": "B3 - StockOrders Between Dates",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/between?start=2026-10-01&end=2026-10-31", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "between"], "query": [{ "key": "start", "value": "2026-10-01" }, { "key": "end", "value": "2026-10-31" }] }
+      }
+    },
+    {
+      "name": "B3 - StockOrders Between Dates - Empty",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/between?start=2026-12-01&end=2026-12-31", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "between"], "query": [{ "key": "start", "value": "2026-12-01" }, { "key": "end", "value": "2026-12-31" }] }
+      }
+    },
+    {
+      "name": "C1 - Pharmacists by Medicine Category",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/pharmacists/by-medicine-category?name=anti", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "by-medicine-category"], "query": [{ "key": "name", "value": "anti" }] }
+      }
+    },
+    {
+      "name": "C2 - Free Counters",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/counters/free", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "counters", "free"] }
+      }
+    },
+    {
+      "name": "C3 - Unused Medicine Categories",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/medicine-categories/unused", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "medicine-categories", "unused"] }
+      }
+    },
+    {
+      "name": "C4 - Suppliers of Pharmacist",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/suppliers/of-pharmacist/8917d215-7cbd-4e84-97a9-6f11105db446", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "of-pharmacist", "8917d215-7cbd-4e84-97a9-6f11105db446"] }
+      }
+    },
+    {
+      "name": "C4 - Suppliers of Pharmacist - 404",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/suppliers/of-pharmacist/00000000-0000-0000-0000-000000000000", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "suppliers", "of-pharmacist", "00000000-0000-0000-0000-000000000000"] }
+      }
+    },
+    {
+      "name": "D1 - Save StockOrder - Past Date 400",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"orderDate\": \"2026-01-01\",\n  \"invoiceNumber\": \"INV-TEST-001\",\n  \"supplier\": { \"id\": \"1d263c3f-3e35-4278-9e65-aacc4c513409\" },\n  \"pharmacist\": { \"id\": \"8917d215-7cbd-4e84-97a9-6f11105db446\" }\n}" },
+        "url": { "raw": "http://localhost:8084/api/stock-orders/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "save"] }
+      }
+    },
+    {
+      "name": "D1 - Save StockOrder - Duplicate Date 409",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"orderDate\": \"2026-12-01\",\n  \"invoiceNumber\": \"INV-TEST-002\",\n  \"supplier\": { \"id\": \"1d263c3f-3e35-4278-9e65-aacc4c513409\" },\n  \"pharmacist\": { \"id\": \"8917d215-7cbd-4e84-97a9-6f11105db446\" }\n}" },
+        "url": { "raw": "http://localhost:8084/api/stock-orders/save", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "save"] }
+      }
+    },
+    {
+      "name": "D2 - Update StockOrder Status",
+      "request": {
+        "method": "PATCH",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/a959c45a-e516-4d18-a75e-d669d338a362/status?status=DISPATCHED", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "a959c45a-e516-4d18-a75e-d669d338a362", "status"], "query": [{ "key": "status", "value": "DISPATCHED" }] }
+      }
+    },
+    {
+      "name": "D2 - Update StockOrder Status - Invalid 400",
+      "request": {
+        "method": "PATCH",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/796fd6d4-c6eb-43ab-b257-d0be9a366d68/status?status=PLACED", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "796fd6d4-c6eb-43ab-b257-d0be9a366d68", "status"], "query": [{ "key": "status", "value": "PLACED" }] }
+      }
+    },
+    {
+      "name": "D2 - Update StockOrder Status - 404",
+      "request": {
+        "method": "PATCH",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/00000000-0000-0000-0000-000000000000/status?status=DISPATCHED", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "00000000-0000-0000-0000-000000000000", "status"], "query": [{ "key": "status", "value": "DISPATCHED" }] }
+      }
+    },
+    {
+      "name": "D3 - Add Medicine Category to Pharmacist",
+      "request": {
+        "method": "PUT",
+        "url": { "raw": "http://localhost:8084/api/pharmacists/31fc9b2b-c13f-4a73-b744-983dd770699e/medicine-categories/5661bea0-6566-45cb-9d0c-86183de0bb17", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "31fc9b2b-c13f-4a73-b744-983dd770699e", "medicine-categories", "5661bea0-6566-45cb-9d0c-86183de0bb17"] }
+      }
+    },
+    {
+      "name": "D3 - Add Medicine Category - Already Has 409",
+      "request": {
+        "method": "PUT",
+        "url": { "raw": "http://localhost:8084/api/pharmacists/31fc9b2b-c13f-4a73-b744-983dd770699e/medicine-categories/5661bea0-6566-45cb-9d0c-86183de0bb17", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "31fc9b2b-c13f-4a73-b744-983dd770699e", "medicine-categories", "5661bea0-6566-45cb-9d0c-86183de0bb17"] }
+      }
+    },
+    {
+      "name": "D4 - Move Pharmacist to Counter",
+      "request": {
+        "method": "PATCH",
+        "url": { "raw": "http://localhost:8084/api/pharmacists/31fc9b2b-c13f-4a73-b744-983dd770699e/counter?counterNumber=4", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "31fc9b2b-c13f-4a73-b744-983dd770699e", "counter"], "query": [{ "key": "counterNumber", "value": "4" }] }
+      }
+    },
+    {
+      "name": "D4 - Move Pharmacist to Counter - Taken 409",
+      "request": {
+        "method": "PATCH",
+        "url": { "raw": "http://localhost:8084/api/pharmacists/31fc9b2b-c13f-4a73-b744-983dd770699e/counter?counterNumber=1", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "pharmacists", "31fc9b2b-c13f-4a73-b744-983dd770699e", "counter"], "query": [{ "key": "counterNumber", "value": "1" }] }
+      }
+    },
+    {
+      "name": "E1 - Save StockBatch",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"medicineName\": \"Paracetamol 500mg\",\n  \"batchNumber\": \"PCM-2026-07\",\n  \"quantity\": 300\n}" },
+        "url": { "raw": "http://localhost:8084/api/stock-batches/save?stockOrderId=796fd6d4-c6eb-43ab-b257-d0be9a366d68", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-batches", "save"], "query": [{ "key": "stockOrderId", "value": "796fd6d4-c6eb-43ab-b257-d0be9a366d68" }] }
+      }
+    },
+    {
+      "name": "E1 - Save StockBatch - Not RECEIVED 400",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"medicineName\": \"Paracetamol 500mg\",\n  \"batchNumber\": \"PCM-2026-07\",\n  \"quantity\": 300\n}" },
+        "url": { "raw": "http://localhost:8084/api/stock-batches/save?stockOrderId=7fc1998c-5361-4cdf-9cef-a0cf5c3ef7aa", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-batches", "save"], "query": [{ "key": "stockOrderId", "value": "7fc1998c-5361-4cdf-9cef-a0cf5c3ef7aa" }] }
+      }
+    },
+    {
+      "name": "E1 - Save StockBatch - 404",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"medicineName\": \"Paracetamol 500mg\",\n  \"batchNumber\": \"PCM-2026-07\",\n  \"quantity\": 300\n}" },
+        "url": { "raw": "http://localhost:8084/api/stock-batches/save?stockOrderId=00000000-0000-0000-0000-000000000000", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-batches", "save"], "query": [{ "key": "stockOrderId", "value": "00000000-0000-0000-0000-000000000000" }] }
+      }
+    },
+    {
+      "name": "E2 - StockBatch History by Supplier",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-batches/supplier/SUP-004", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-batches", "supplier", "SUP-004"] }
+      }
+    },
+    {
+      "name": "E3 - Delete StockOrder with Batches - 409",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/delete/796fd6d4-c6eb-43ab-b257-d0be9a366d68", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "delete", "796fd6d4-c6eb-43ab-b257-d0be9a366d68"] }
+      }
+    },
+    {
+      "name": "E3 - Delete StockBatch",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "http://localhost:8084/api/stock-batches/delete/03eab0c3-7ac8-4e29-acac-5281ea22c6f5", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-batches", "delete", "03eab0c3-7ac8-4e29-acac-5281ea22c6f5"] }
+      }
+    },
+    {
+      "name": "F1 - StockOrders Stats by Status",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/stats/by-status", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "stats", "by-status"] }
+      }
+    },
+    {
+      "name": "F2 - Cancel Day Orders",
+      "request": {
+        "method": "PATCH",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/cancel-day?pharmacistId=8917d215-7cbd-4e84-97a9-6f11105db446&date=2026-11-03", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "cancel-day"], "query": [{ "key": "pharmacistId", "value": "8917d215-7cbd-4e84-97a9-6f11105db446" }, { "key": "date", "value": "2026-11-03" }] }
+      }
+    },
+    {
+      "name": "Bonus - Dashboard Summary",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/dashboard/summary", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "dashboard", "summary"] }
+      }
+    },
+    {
+      "name": "Bonus - StockOrders Page",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8084/api/stock-orders/page?page=0&size=5&sort=orderDate,desc", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "stock-orders", "page"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "5" }, { "key": "sort", "value": "orderDate,desc" }] }
+      }
+    }
+  ]
+}
