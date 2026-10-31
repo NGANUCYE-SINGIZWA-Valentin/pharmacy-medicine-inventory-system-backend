@@ -7,14 +7,17 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Supplier;
+import rw.ac.auca.pharmacy.pharmacy_inventory.repository.PharmacistRepository;
 import rw.ac.auca.pharmacy.pharmacy_inventory.repository.SupplierRepository;
 
 @Service
 public class SupplierService {
     private final SupplierRepository repository;
+    private final PharmacistRepository pharmacistRepository;
 
-    public SupplierService(SupplierRepository repository) {
+    public SupplierService(SupplierRepository repository, PharmacistRepository pharmacistRepository) {
         this.repository = repository;
+        this.pharmacistRepository = pharmacistRepository;
     }
 
     public String save(Supplier supplier) {
@@ -67,5 +70,12 @@ public class SupplierService {
 
     public List<Supplier> findByCity(String city) {
         return repository.findByCityIgnoreCaseOrderByCompanyNameAsc(city);
+    }
+
+    public Object findByPharmacistId(UUID pharmacistId) {
+        if (!pharmacistRepository.existsById(pharmacistId)) {
+            return "The pharmacist with that id does not exist";
+        }
+        return repository.findByPharmacistId(pharmacistId);
     }
 }

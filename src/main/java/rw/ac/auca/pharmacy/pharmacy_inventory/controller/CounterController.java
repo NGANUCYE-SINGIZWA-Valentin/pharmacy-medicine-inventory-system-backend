@@ -64,4 +64,9 @@ public class CounterController {
                 : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(message);
     }
+
+    @GetMapping("/free")
+    public List<Counter> findFreeCounters() {
+        return service.findFreeCounters();
+    }
 }

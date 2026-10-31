@@ -64,4 +64,9 @@ public class MedicineCategoryController {
                 : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(message);
     }
+
+    @GetMapping("/unused")
+    public List<MedicineCategory> findUnused() {
+        return service.findUnused();
+    }
 }

@@ -65,6 +65,10 @@ public class PharmacistService {
         return "The pharmacist with that id does not exist";
     }
 
+    public List<Pharmacist> findByMedicineCategoryName(String name) {
+        return repository.findByMedicineCategoryName(name);
+    }
+
     private void validateLicenseNumber(String licenseNumber, UUID id) {
         if (licenseNumber == null || licenseNumber.trim().isEmpty()) {
             throw new IllegalArgumentException("License number is required");

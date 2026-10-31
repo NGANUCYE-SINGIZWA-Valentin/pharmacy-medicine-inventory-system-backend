@@ -63,4 +63,13 @@ public class SupplierController {
     public List<Supplier> findByCity(@RequestParam String city) {
         return service.findByCity(city);
     }
+
+    @GetMapping("/of-pharmacist/{pharmacistId}")
+    public ResponseEntity<?> findByPharmacistId(@PathVariable UUID pharmacistId) {
+        Object result = service.findByPharmacistId(pharmacistId);
+        if (result instanceof String) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

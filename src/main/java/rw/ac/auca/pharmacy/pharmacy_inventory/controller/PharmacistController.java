@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Pharmacist;
@@ -56,5 +57,10 @@ public class PharmacistController {
         String message = service.delete(id);
         HttpStatus status = "Pharmacist deleted successfully".equals(message) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(message);
+    }
+
+    @GetMapping("/by-medicine-category")
+    public List<Pharmacist> findByMedicineCategory(@RequestParam String name) {
+        return service.findByMedicineCategoryName(name);
     }
 }

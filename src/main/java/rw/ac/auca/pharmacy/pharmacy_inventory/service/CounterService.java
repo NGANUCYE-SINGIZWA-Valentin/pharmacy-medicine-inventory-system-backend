@@ -53,6 +53,10 @@ public class CounterService {
         return "The counter with that id does not exist";
     }
 
+    public List<Counter> findFreeCounters() {
+        return repository.findFreeCounters();
+    }
+
     private void validateCounterName(Counter counter) {
         if (counter.getName() == null || counter.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Counter name is required");

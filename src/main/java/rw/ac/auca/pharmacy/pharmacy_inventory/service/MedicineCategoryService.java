@@ -60,4 +60,8 @@ public class MedicineCategoryService {
         }
         return "The medicine category with that id does not exist";
     }
+
+    public List<MedicineCategory> findUnused() {
+        return repository.findUnused();
+    }
 }
