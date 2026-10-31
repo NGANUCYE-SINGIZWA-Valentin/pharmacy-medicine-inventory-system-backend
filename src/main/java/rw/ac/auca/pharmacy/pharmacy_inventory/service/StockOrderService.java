@@ -1,5 +1,6 @@
 package rw.ac.auca.pharmacy.pharmacy_inventory.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,6 +64,14 @@ public class StockOrderService {
             return "Stock order deleted successfully";
         }
         return "The stock order with that id does not exist";
+    }
+
+    public List<StockOrder> findByStatus(StockOrderStatus status) {
+        return repository.findByStatusOrderByOrderDateAsc(status);
+    }
+
+    public List<StockOrder> findBetween(LocalDate start, LocalDate end) {
+        return repository.findByOrderDateBetweenOrderByOrderDateAsc(start, end);
     }
 
     private void validateInvoiceNumber(String invoiceNumber, UUID id) {

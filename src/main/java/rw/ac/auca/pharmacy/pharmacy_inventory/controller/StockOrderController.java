@@ -1,5 +1,6 @@
 package rw.ac.auca.pharmacy.pharmacy_inventory.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrder;
+import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrderStatus;
 import rw.ac.auca.pharmacy.pharmacy_inventory.service.StockOrderService;
 
 @RestController
@@ -56,5 +59,15 @@ public class StockOrderController {
         String message = service.delete(id);
         HttpStatus status = "Stock order deleted successfully".equals(message) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(message);
+    }
+
+    @GetMapping("/by-status")
+    public List<StockOrder> findByStatus(@RequestParam StockOrderStatus status) {
+        return service.findByStatus(status);
+    }
+
+    @GetMapping("/between")
+    public List<StockOrder> findBetween(@RequestParam String start, @RequestParam String end) {
+        return service.findBetween(LocalDate.parse(start), LocalDate.parse(end));
     }
 }

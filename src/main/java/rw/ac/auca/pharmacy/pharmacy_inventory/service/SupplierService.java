@@ -64,4 +64,8 @@ public class SupplierService {
         }
         return "The supplier with that id does not exist";
     }
+
+    public List<Supplier> findByCity(String city) {
+        return repository.findByCityIgnoreCaseOrderByCompanyNameAsc(city);
+    }
 }
