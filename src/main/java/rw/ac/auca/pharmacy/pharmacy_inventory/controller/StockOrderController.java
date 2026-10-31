@@ -65,8 +65,13 @@ public class StockOrderController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         String message = service.delete(id);
-        HttpStatus status = "Stock order deleted successfully".equals(message) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        return ResponseEntity.status(status).body(message);
+        if (message.equals("The stock order with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.equals("That stock order has stock batches, delete them first")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
     }
 
     @PatchMapping("/{id}/status")

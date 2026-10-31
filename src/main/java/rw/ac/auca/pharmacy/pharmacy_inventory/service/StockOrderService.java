@@ -11,6 +11,7 @@ import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Pharmacist;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrder;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrderStatus;
 import rw.ac.auca.pharmacy.pharmacy_inventory.repository.PharmacistRepository;
+import rw.ac.auca.pharmacy.pharmacy_inventory.repository.StockBatchRepository;
 import rw.ac.auca.pharmacy.pharmacy_inventory.repository.StockOrderRepository;
 import rw.ac.auca.pharmacy.pharmacy_inventory.repository.SupplierRepository;
 
@@ -19,12 +20,14 @@ public class StockOrderService {
     private final StockOrderRepository repository;
     private final SupplierRepository supplierRepository;
     private final PharmacistRepository pharmacistRepository;
+    private final StockBatchRepository stockBatchRepository;
 
     public StockOrderService(StockOrderRepository repository, SupplierRepository supplierRepository,
-            PharmacistRepository pharmacistRepository) {
+            PharmacistRepository pharmacistRepository, StockBatchRepository stockBatchRepository) {
         this.repository = repository;
         this.supplierRepository = supplierRepository;
         this.pharmacistRepository = pharmacistRepository;
+        this.stockBatchRepository = stockBatchRepository;
     }
 
     public String save(StockOrder stockOrder) {
@@ -67,11 +70,15 @@ public class StockOrderService {
     }
 
     public String delete(UUID id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return "Stock order deleted successfully";
+        Optional<StockOrder> result = repository.findById(id);
+        if (result.isEmpty()) {
+            return "The stock order with that id does not exist";
         }
-        return "The stock order with that id does not exist";
+        if (stockBatchRepository.existsByStockOrder(result.get())) {
+            return "That stock order has stock batches, delete them first";
+        }
+        repository.deleteById(id);
+        return "Stock order deleted successfully";
     }
 
     public String updateStatus(UUID id, StockOrderStatus newStatus) {
