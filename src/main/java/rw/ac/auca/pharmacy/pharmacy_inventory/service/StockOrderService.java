@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,6 +121,10 @@ public class StockOrderService {
         int count = repository.cancelDayOrders(pharmacistId, date,
                 StockOrderStatus.DECLINED, StockOrderStatus.RECEIVED);
         return count + " stock orders cancelled";
+    }
+
+    public Page<StockOrder> findPage(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     private void validateInvoiceNumber(String invoiceNumber, UUID id) {

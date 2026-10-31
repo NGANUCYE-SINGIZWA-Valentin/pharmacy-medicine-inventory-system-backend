@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -42,4 +44,6 @@ public interface StockOrderRepository extends JpaRepository<StockOrder, UUID> {
                         @Param("date") LocalDate date,
                         @Param("declined") StockOrderStatus declined,
                         @Param("received") StockOrderStatus received);
+
+    Page<StockOrder> findAll(Pageable pageable);
 }
