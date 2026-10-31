@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Counter;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Pharmacist;
 
 public interface PharmacistRepository extends JpaRepository<Pharmacist, UUID> {
@@ -19,4 +20,6 @@ public interface PharmacistRepository extends JpaRepository<Pharmacist, UUID> {
             WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))
             """)
     List<Pharmacist> findByMedicineCategoryName(@Param("name") String name);
+
+    boolean existsByCounter(Counter counter);
 }

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Pharmacist;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrder;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrderStatus;
 import rw.ac.auca.pharmacy.pharmacy_inventory.repository.PharmacistRepository;
@@ -27,8 +28,16 @@ public class StockOrderService {
     }
 
     public String save(StockOrder stockOrder) {
+        if (stockOrder.getOrderDate().isBefore(LocalDate.now())) {
+            return "Stock order date cannot be in the past";
+        }
         validateInvoiceNumber(stockOrder.getInvoiceNumber(), null);
         resolveRelationships(stockOrder);
+        Pharmacist pharmacist = stockOrder.getPharmacist();
+        if (pharmacist != null && repository.existsByPharmacistAndOrderDateAndStatusNot(
+                pharmacist, stockOrder.getOrderDate(), StockOrderStatus.DECLINED)) {
+            return "Pharmacist already receives a stock order on that date";
+        }
         stockOrder.setStatus(StockOrderStatus.PLACED);
         repository.save(stockOrder);
         return "Stock order saved successfully";
@@ -52,7 +61,6 @@ public class StockOrderService {
             existing.setInvoiceNumber(stockOrder.getInvoiceNumber());
             existing.setSupplier(stockOrder.getSupplier());
             existing.setPharmacist(stockOrder.getPharmacist());
-            // status is intentionally NOT updated here — use PATCH /status
             result = Optional.of(repository.save(existing));
         }
         return result;
@@ -64,6 +72,25 @@ public class StockOrderService {
             return "Stock order deleted successfully";
         }
         return "The stock order with that id does not exist";
+    }
+
+    public String updateStatus(UUID id, StockOrderStatus newStatus) {
+        Optional<StockOrder> result = repository.findById(id);
+        if (result.isEmpty()) {
+            return "The stock order with that id does not exist";
+        }
+        StockOrder existing = result.get();
+        StockOrderStatus current = existing.getStatus();
+        boolean allowed = (current == StockOrderStatus.PLACED &&
+                (newStatus == StockOrderStatus.DISPATCHED || newStatus == StockOrderStatus.DECLINED))
+                || (current == StockOrderStatus.DISPATCHED &&
+                (newStatus == StockOrderStatus.RECEIVED || newStatus == StockOrderStatus.DECLINED));
+        if (!allowed) {
+            return "Cannot change status from " + current + " to " + newStatus;
+        }
+        existing.setStatus(newStatus);
+        repository.save(existing);
+        return "Stock order status updated successfully";
     }
 
     public List<StockOrder> findByStatus(StockOrderStatus status) {

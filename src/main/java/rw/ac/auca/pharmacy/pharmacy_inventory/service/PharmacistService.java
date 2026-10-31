@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Counter;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.MedicineCategory;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Pharmacist;
 import rw.ac.auca.pharmacy.pharmacy_inventory.repository.CounterRepository;
@@ -67,6 +68,45 @@ public class PharmacistService {
 
     public List<Pharmacist> findByMedicineCategoryName(String name) {
         return repository.findByMedicineCategoryName(name);
+    }
+
+    public String addMedicineCategory(UUID pharmacistId, UUID categoryId) {
+        Optional<Pharmacist> pharmacistOpt = repository.findById(pharmacistId);
+        if (pharmacistOpt.isEmpty()) {
+            return "The pharmacist with that id does not exist";
+        }
+        Optional<MedicineCategory> categoryOpt = categoryRepository.findById(categoryId);
+        if (categoryOpt.isEmpty()) {
+            return "That medicine category does not exist";
+        }
+        Pharmacist pharmacist = pharmacistOpt.get();
+        MedicineCategory category = categoryOpt.get();
+        if (pharmacist.getMedicineCategories().contains(category)) {
+            return "The pharmacist already has that medicine category";
+        }
+        pharmacist.getMedicineCategories().add(category);
+        repository.save(pharmacist);
+        return "Medicine category added to the pharmacist";
+    }
+
+    public String moveToCounter(UUID pharmacistId, int counterNumber) {
+        Optional<Pharmacist> pharmacistOpt = repository.findById(pharmacistId);
+        if (pharmacistOpt.isEmpty()) {
+            return "The pharmacist with that id does not exist";
+        }
+        Optional<Counter> counterOpt = counterRepository.findByCounterNumber(counterNumber);
+        if (counterOpt.isEmpty()) {
+            return "The counter with that counterNumber does not exist";
+        }
+        Counter counter = counterOpt.get();
+        Pharmacist pharmacist = pharmacistOpt.get();
+        if (repository.existsByCounter(counter) && !counter.getId().equals(
+                pharmacist.getCounter() != null ? pharmacist.getCounter().getId() : null)) {
+            return "That counter is taken by another pharmacist";
+        }
+        pharmacist.setCounter(counter);
+        repository.save(pharmacist);
+        return "Counter changed successfully";
     }
 
     private void validateLicenseNumber(String licenseNumber, UUID id) {

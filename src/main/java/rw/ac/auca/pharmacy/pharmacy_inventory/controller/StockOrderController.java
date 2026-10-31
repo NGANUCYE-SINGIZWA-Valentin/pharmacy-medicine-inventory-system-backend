@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,7 +33,14 @@ public class StockOrderController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody StockOrder stockOrder) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(stockOrder));
+        String message = service.save(stockOrder);
+        if (message.equals("Stock order date cannot be in the past")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        if (message.equals("Pharmacist already receives a stock order on that date")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @GetMapping("/all")
@@ -59,6 +67,18 @@ public class StockOrderController {
         String message = service.delete(id);
         HttpStatus status = "Stock order deleted successfully".equals(message) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(message);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> updateStatus(@PathVariable UUID id, @RequestParam StockOrderStatus status) {
+        String message = service.updateStatus(id, status);
+        if (message.equals("The stock order with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.startsWith("Cannot change status")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/by-status")

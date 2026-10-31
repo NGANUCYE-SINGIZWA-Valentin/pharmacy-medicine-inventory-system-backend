@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -62,5 +63,33 @@ public class PharmacistController {
     @GetMapping("/by-medicine-category")
     public List<Pharmacist> findByMedicineCategory(@RequestParam String name) {
         return service.findByMedicineCategoryName(name);
+    }
+
+    @PutMapping("/{pharmacistId}/medicine-categories/{medicineCategoryId}")
+    public ResponseEntity<String> addMedicineCategory(@PathVariable UUID pharmacistId,
+            @PathVariable UUID medicineCategoryId) {
+        String message = service.addMedicineCategory(pharmacistId, medicineCategoryId);
+        if (message.equals("The pharmacist with that id does not exist")
+                || message.equals("That medicine category does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.equals("The pharmacist already has that medicine category")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+
+    @PatchMapping("/{pharmacistId}/counter")
+    public ResponseEntity<String> moveToCounter(@PathVariable UUID pharmacistId,
+            @RequestParam int counterNumber) {
+        String message = service.moveToCounter(pharmacistId, counterNumber);
+        if (message.equals("The pharmacist with that id does not exist")
+                || message.equals("The counter with that counterNumber does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (message.equals("That counter is taken by another pharmacist")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
     }
 }
