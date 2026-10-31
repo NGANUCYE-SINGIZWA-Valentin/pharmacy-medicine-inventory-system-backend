@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.Pharmacist;
 import rw.ac.auca.pharmacy.pharmacy_inventory.domain.StockOrder;
@@ -106,6 +107,17 @@ public class StockOrderService {
 
     public List<StockOrder> findBetween(LocalDate start, LocalDate end) {
         return repository.findByOrderDateBetweenOrderByOrderDateAsc(start, end);
+    }
+
+    public List<Object[]> countByStatus() {
+        return repository.countByStatus();
+    }
+
+    @Transactional
+    public String cancelDayOrders(UUID pharmacistId, LocalDate date) {
+        int count = repository.cancelDayOrders(pharmacistId, date,
+                StockOrderStatus.DECLINED, StockOrderStatus.RECEIVED);
+        return count + " stock orders cancelled";
     }
 
     private void validateInvoiceNumber(String invoiceNumber, UUID id) {

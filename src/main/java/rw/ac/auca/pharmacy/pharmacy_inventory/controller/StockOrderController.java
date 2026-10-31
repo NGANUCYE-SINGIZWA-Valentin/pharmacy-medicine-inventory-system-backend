@@ -95,4 +95,15 @@ public class StockOrderController {
     public List<StockOrder> findBetween(@RequestParam String start, @RequestParam String end) {
         return service.findBetween(LocalDate.parse(start), LocalDate.parse(end));
     }
+
+    @GetMapping("/stats/by-status")
+    public List<Object[]> countByStatus() {
+        return service.countByStatus();
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDayOrders(@RequestParam UUID pharmacistId, @RequestParam String date) {
+        String message = service.cancelDayOrders(pharmacistId, LocalDate.parse(date));
+        return ResponseEntity.ok(message);
+    }
 }
